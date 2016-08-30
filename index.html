@@ -2,10 +2,12 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>Reveal.js 3 Slide Demo</title>
-	<link rel="stylesheet" href="css/reveal.min.css">
-	<link rel="stylesheet" href="css/theme/default.css" id="theme">
-	<!--Add support for earlier versions of Internet Explorer -->
+	<title>Playing with Docker containers</title>
+	<link rel="stylesheet" href="css/reveal.css">
+	<link rel="stylesheet" href="css/theme/league.css">
+	<!-- <link rel="stylesheet" href="css/theme/beige.css"> -->
+
+  <!--Add support for earlier versions of Internet Explorer -->
 	<!--[if lt IE 9]>
 	<script src="lib/js/html5shiv.js"></script>
 	<![endif]-->
@@ -20,7 +22,7 @@
 			<!-- ALL SLIDES GO HERE -->
 			<!-- Each section element contains an individual slide -->
 			<section>
-				<h1>About My Product</h1>
+				<h1>Playing with Docker containers</h1>
 				<p>My product discussed here</p>
 			</section>
 
@@ -36,14 +38,48 @@
 				<p>Visit internal slide<a href="#/show-a-link"> 2</a>
 			</section>
 
+      <section data-background="images/maxiv_winter1.jpg"
+               data-background-transition="zoom">
+               Slide 1</section>
+      <section>
+        <section>vertical Slide 1</section>
+        <section>vertical Slide 2</section>
+      </section>
+      <section>Slide 2</section>
+
+      <section data-markdown>
+        <script type="text/template">
+          # Page title
+
+          A paragraph with some text and a [link](http://hakim.se).
+        </script>
+      </section>
+
+      <!-- If you want to get external files, you need to run a local web server.
+           More info here:
+           https://github.com/hakimel/reveal.js#full-setup
+      <section data-markdown="my_slides/example.md"
+               data-separator="^\n\n\n"
+               data-separator-vertical="^\n\n"
+               data-separator-notes="^Note:"
+               data-charset="iso-8859-15">
+      </section>
+    -->
 			</div>
 	</div>
 	<script src="lib/js/head.min.js"></script>
-	<script src="js/reveal.min.js"></script>
+	<script src="js/reveal.js"></script>
 
 	<script>
 		// Required, even if empty.
 		Reveal.initialize({
+      // More info https://github.com/hakimel/reveal.js#dependencies
+      dependencies: [
+        { src: 'plugin/markdown/marked.js' },
+        { src: 'plugin/markdown/markdown.js' },
+        { src: 'plugin/notes/notes.js', async: true },
+        { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+      ]
 		});
 	</script>
 </body>
