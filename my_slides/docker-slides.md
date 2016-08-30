@@ -3,16 +3,21 @@
 Antonio Milán Otero
 KITS - 2016
 
+---
 
 # What Docker is
 
  ... but first ...
+
+---
 
 # What I'm not.
 
 # **I'm not a Docker expert!!**
 
  ... Just to let it clear.
+
+ ---
 
 # OK, let's continue. What is Docker?
 
@@ -31,6 +36,8 @@ Yes, I have ctrl+C ctrl+V this info from [here][1]
 
 [1] http://www.docker.com/what-docker
 
+---
+
 # What Docker is NOT
 
 ## It's not a Virtual Machine
@@ -40,9 +47,13 @@ Yes, I have ctrl+C ctrl+V this info from [here][1]
 Virtual Machines include: Application, binaries, libraries and the entire guest OS.
 Containers include the application and its dependencies. Run in an **isolated process** in user space on the host operating system.
 
+---
+
 # Maybe no you feel like ...
 
 > Add WTF gif
+
+---
 
 # How we used it for MxCUBE
 ... but first let's put you on context ...
@@ -50,9 +61,14 @@ Containers include the application and its dependencies. Run in an **isolated pr
 A couple of months ago we run a workshop in Hamburg. We wanted to let the people experiment with our application, but at the end we discover that they were having plenty of problems to install it and run it.
 
 > Add use cases in vertical slides
+
+--
+
 # Use case 1: Distributing a mockup version for newcomers
 
 So, we decided to distribute a VM to make easier for newcomers to test the app.
+
+--
 
 # Use case 2: Development environment.
 
@@ -62,15 +78,21 @@ It's quite nice that we were thinking in using it as our development environment
 
 But we are not there yet.
 
+--
+
 # Use case 3: Deployment environment.
 
 It will be not so complex to use it for deployment.
 
 > add fragment
 
+---
+
 But we are not there yet ... sorry again.
 
 > Add Sorry gif
+
+---
 
 # MxCUBE overview
 
@@ -81,6 +103,8 @@ MxCUBE is composed by 3 main services:
   - MxCUBE
 
 So in order to have it running you need to run those 3.
+
+---
 
 ## First thing: Dockerfile
 
@@ -96,6 +120,8 @@ MAINTAINER Antonio Milan Otero <antonio.milan_otero.maxiv.lu.se>
 ```
 
 > Vertical slides
+
+--
 
 Then you install whatever is needed in your container.
 
@@ -123,6 +149,7 @@ RUN yum install -y \
         libgfortran \
         cyrus-sasl-devel
 ```
+--
 
 Then we get the latest version of the app.
  > In the future it will be pointing official releases.
@@ -137,6 +164,8 @@ WORKDIR /mxcube
 RUN git clone https://github.com/mxcube/mxcube3.git --recursive
 WORKDIR mxcube3
 ```
+--
+
 After that, more installations
 
 ```
@@ -159,6 +188,7 @@ RUN npm install
 RUN npm install fabric
 RUN npm install --dev
 ```
+--
 
 Some configuration now.
 
@@ -173,6 +203,8 @@ EXPOSE 8090
 
 CMD ["/usr/bin/supervisord"]
 ```
+
+--
 
 We use supervisor in order to run and monitor all the processes.
 More details here:
@@ -194,6 +226,8 @@ command=python mxcube3-server -r test/HardwareObjectsMockup.xml --log-file mxcub
 command=npm start
 ```
 
+--
+
 # And run it
 
 ```
@@ -202,6 +236,8 @@ docker run -i -p 8090:8090 -t mxcube_web
 ```
 
 > Add screenshot of mxcube running.
+
+--
 
 If you don't want to build it, it's already available in docker hub.
 So, execute:
@@ -213,6 +249,7 @@ And enjoy it.
 
 > Add like_magic.gif
 
+---
 
 # Docker compose
 
@@ -244,6 +281,8 @@ services:
       - ./data:/data
 ```
 
+--
+
 And then:
 
 ```
@@ -253,9 +292,13 @@ docker-compose up
 
 And the magic happens.
 
+---
 
 Repo available here:
 https://github.com/amilan/mxcube_web
+
+
+---
 
 # Docker registry
 
@@ -267,6 +310,8 @@ Some good things:
   - Push and pull commands (for maintenance).
   - Notification system (Webhooks)
   - Able to connect to a Continuous Integration / Delivery system.
+
+---
 
 # Ansible integration?
 
@@ -280,3 +325,7 @@ It will provide:
   - Auditability: Simple to review content in a container.
 
   - Ubiquity: You can manage containers environments and also host environments.
+
+---
+
+# Questions?
