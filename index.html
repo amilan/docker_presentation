@@ -25,12 +25,18 @@
 				<h1>Playing with Docker containers</h1>
 				<p>Antonio Milán Otero</p>
         <p>KITS - 2016</p>
+        <aside class="notes" data-markdown>
+        Oh hey, these are some notes. They'll be hidden in your presentation, but you can see them if you open the speaker notes window (hit 's' on your keyboard).
+        </aside>
 			</section>
-
+<!--
       <section data-markdown>
         # What Docker is
 
          ... but first ...
+
+         Note:
+         This note is not suppost to appear.
       </section>
 
       <section>
@@ -41,28 +47,33 @@
                data-fragment-index="1"
                data-src="images/expert.jpg">
       </section>
-
+-->
       <!-- Slides are separated by newline + three dashes + newline, vertical slides identical but two dashes -->
       <section data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$">
         <script type="text/template">
-          # OK, let's continue. What is Docker?
+					# Overview
+					- What is Docker?
+					- How does it work?
+					- How we use it for MxCUBE
+					- How to create a container
+					- Services
+					- Other tools
 
-          Docker containers wrap a piece of software in a complete filesystem that contains everything needed to run:
+					---
 
-            - Code
-            - Runtime
-            - System tools
-            - System libraries
+					# What is Docker?
 
-          And everything could be installed on a server.
+					Docker containers wrap a piece of software in a complete filesystem that contains everything needed to run:
 
-          This guarantees that __the software will always run the same, regardless of its environment.__
+					- Code
+					- Runtime
+					- System tools
+					- System libraries
 
-          Yes, I have "ctrl+C / ctrl+V" this info from here:
+					This guarantees that __the software will always run the same, regardless of its environment.__
 
-          http://www.docker.com/what-docker
-        </script>
-      </section>
+				</script>
+			</section>
 
       <section>
           <h1>What Docker is NOT</h1>
@@ -72,6 +83,11 @@
           <p>Virtual Machines include: Application, binaries, libraries and the entire guest OS.</p>
           <p>Containers include the application and its dependencies.</p>
           <p>Run in an <b>isolated process</b> in user space on the host operating system.</p>
+          <aside class="notes" data-markdown>
+          * VM: app, libs and entire guest os.
+          * Containers: app and libs accessing the same kernel.
+          * Isolated process.
+          </aside>
       </section>
 
       <section data-background="images/WTF.gif"
@@ -81,36 +97,80 @@
 
       <section data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$">
         <script type="text/template">
-          # How we used it for MxCUBE
-          ## ... but first let's put you on context ...
+					Imagine you have an app and its dependencies to deploy.
 
-          A couple of months ago we ran a workshop in Hamburg.
+					![container](images/container_2.png)
 
-          We wanted to let the people experiment with our application, but at the end we discovered that they were having plenty of problems to install it and run it.
+					--
 
-          --
+					You put it all together on the container.
 
-          # Use case 1: Distributing a mockup version for newcomers
+					![container](images/container_4.png)
 
-          So, we decided to distribute a VM to make easier for newcomers to test the app.
+					--
 
-          But why to use a VM when we can use a docker container and simplify the process and reduce the weight?
+					Ship it together.
 
-          --
+					![container](images/container_3.jpg)
 
-          # Use case 2: Development environment.
+					--
 
-          Docker it's so nice that after playing with it we started to consider its usage as a development environment.
+					More details on:
 
-          ...
+					http://www.docker.com/what-docker
 
-          But we are not there yet.
+					https://docs.docker.com/engine/understanding-docker/
 
-          --
+					---
 
-          # Use case 3: Deployment environment.
+					# How does it works?
 
-          Also, it will be not so complex to use it for deployment.
+					3 main components:
+					- Images
+					- Containers
+					- Registries
+
+					--
+
+					# Architecture
+
+					![architecture](images/architecture.svg)
+
+					---
+
+					# How we used it for MxCUBE
+					## ... but first let's put you on context ...
+
+					A couple of months ago we ran a workshop in Hamburg.
+
+					We wanted to let the people experiment with our application, but at the end we discovered that they were having plenty of problems to install it and run it.
+
+					--
+
+					# Use case 1: Distributing a mockup version for newcomers
+
+					So, we decided to distribute a VM to make easier for newcomers to test the app.
+
+					But why to use a VM when we can use a docker container and simplify the process and reduce the weight?
+
+					--
+
+					# Use case 2: Development environment.
+
+					Docker it's so nice that after playing with it we started to consider its usage as a development environment.
+
+					...
+
+					But we are not there yet.
+
+					--
+
+					# Use case 3: Deployment environment.
+
+					Also, it will not be so complex to use it for deployment.
+
+					Note:
+					But again.
 
 
         </script>
@@ -131,11 +191,16 @@
             - NPM
             - MxCUBE
 
-          __Good Practice__: Split your monolitic application into several microservices.
+          __Good Practice__: Split your monolithic application into several microservices.
+
+          Note:
+          * Monolithic or microservices should be studied independently.
+          * To keep it simple we started with the monolithic solution ... should I
+          get back to the previous slide?
 
           ---
 
-          ## First thing: Dockerfile
+          ## First thing first: Dockerfile
 
           Here we define everything needed in our container to run the app, and also the configuration that has to be done.
 
@@ -180,7 +245,8 @@
           --
 
           Then we get the latest version of the app.
-           ### In the future it will be pointing official releases.
+
+					In the future it will be pointing official releases.
 
           ```
           # Install git ####
@@ -195,7 +261,7 @@
 
           --
 
-          After that, more installations
+          After that, more dependencies are installed
 
           ```
           # Install EPEL repository ####
@@ -317,6 +383,9 @@
                 - ./data:/data
           ```
 
+          Note:
+          Now we go for the microservices.
+
           --
 
           And then:
@@ -327,6 +396,9 @@
           ```
 
           And the magic happens.
+
+          Note:
+          Get back to the magic gif.
 
           ---
 
@@ -356,10 +428,35 @@
               - Portable playbooks
               - Reproducible environments (using docker, vagrant, etc.)
 
-            - Auditability: Simple to review content in a container.
+            - Auditability: Simple to review and update content in a container.
 
             - Ubiquity: You can manage containers environments and also host environments.
 
+	          Note:
+	          Some benefits:
+	          		- Flexibility: re-use it.
+	              - Auditability: Easy to review and update content.
+	              - Ubiquity: Manage the whole ecosystem.
+				</script>
+      </section>
+
+			<section data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$">
+				<script type="text/template">
+					# Docker Swarm
+
+					It provides features to orchestrate a cluster of Docker Engines.
+
+					Main features:
+					- Cluster management
+					- Decentralized design
+					- Declarative service model
+					- Scaling
+					- Desired state reconciliation
+					- Multi-host networking
+					- Service discovery
+					- Load balancing
+					- Secure by default
+					- Rolling updates
 
         </script>
       </section>
